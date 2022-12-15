@@ -145,21 +145,29 @@ public class RevisionController implements Initializable {
 		  }
 	  }
 	  
-	  /*} public void Borrar() {
-	  if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
-	  Prueba.BorrarClient(tablaClient.getSelectionModel().getSelectedItem().getNIF(
-	  )); Limpiar(); } else { Alert alert = new
-	  Alert(AlertType.WARNING,"No ha seleccionado ningún cliente");
-	  alert.showAndWait(); }
+	  public void Borrar() {
+			if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
+				Prueba.BorrarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID());
+				Limpiar();
+			}
+			else {
+				Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ningún cliente");
+				alert.showAndWait();
+			}
+			
+		} 
 	  
-	  } public void Actualizar() {
-	  if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
-	  Prueba.ActualizarClient(tablaClient.getSelectionModel().getSelectedItem().
-	  getNIF(),new Client(NIF.getText(), Nombre.getText(), Apellidos.getText(),
-	  Edad.getSelectionModel().getSelectedItem())); Limpiar(); } else { Alert alert
-	  = new Alert(AlertType.WARNING,"No ha seleccionado ningún cliente");
-	  alert.showAndWait(); }
-	  
-	  }*/
+	 public void Actualizar() {
+			if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
+				int id=Prueba.obtenerID();
+				Prueba.ActualizarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID(),new Revision(id,clienteActual.getNIF(),LocalDate.now(),Double.parseDouble(OD_Esfera.getText()),Double.parseDouble(OD_Cilindro.getText()),Double.parseDouble(OD_Adicion.getText()),Double.parseDouble(OD_Agudeza.getText()),Double.parseDouble(OI_Esfera.getText()),Double.parseDouble(OI_Cilindro.getText()),Double.parseDouble(OI_Adicion.getText()),Double.parseDouble(OI_Agudeza.getText())));
+				Limpiar();
+			}
+			else {
+				Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ninguna revisión");
+				alert.showAndWait();
+			}
+			
+		}
 	 
 }

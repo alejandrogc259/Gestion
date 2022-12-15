@@ -155,5 +155,54 @@ public class Prueba {
 		tx.commit();
 	}
 	
+	public static void BorrarRevision(int ID) {
+		Properties prop = new Properties();
+		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
+		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		tx.begin();
+		Iterator<Revision> iterador = pm.getExtent(Revision.class).iterator();
+		while(iterador.hasNext())
+		{
+			Revision x = iterador.next();
+			if(x.getID() == ID) {
+				pm.deletePersistent(x);
+			}
+		}
+		tx.commit();
+	}
+	
+	public static void ActualizarRevision(int ID,Revision a) {
+		Properties prop = new Properties();
+		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
+		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		tx.begin();
+		Iterator<Revision> iterador = pm.getExtent(Revision.class).iterator();
+		while(iterador.hasNext())
+		{
+			Revision x = iterador.next();
+			if(x.getID() == ID) {
+				x.setID(a.getID());
+				x.setNIF(a.getNIF());
+				x.setConsulta(a.getConsulta());
+				x.setOD_Esfera(a.getOD_Esfera());
+				x.setOD_Cilindro(a.getOD_Cilindro());
+				x.setOD_Adicion(a.getOD_Adicion());
+				x.setOD_Agudeza(a.getOD_Agudeza());
+				x.setOI_Esfera(a.getOI_Esfera());
+				x.setOI_Cilindro(a.getOI_Cilindro());
+				x.setOI_Adicion(a.getOI_Adicion());
+				x.setOI_Agudeza(a.getOI_Agudeza());
+			}
+		}
+		tx.commit();
+		
+	}
+	
 	
 }

@@ -36,8 +36,8 @@
       <Label layoutX="74.0" layoutY="266.0" text="OD_ADICION" />
       <Label layoutX="71.0" layoutY="298.0" text="OD_AGUDEZA" />
       <Button layoutX="499.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#Anadir" text="Añadir" />
-      <Button layoutX="639.0" layoutY="385.0" mnemonicParsing="false" text="Actualizar" />
-      <Button layoutX="792.0" layoutY="385.0" mnemonicParsing="false" text="Borrar" />
+      <Button layoutX="639.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#Actualizar" text="Actualizar" />
+      <Button layoutX="792.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#Borrar" text="Borrar" />
       <Button layoutX="580.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#Limpiar" text="Limpiar" />
       <Button layoutX="739.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#Cerrar" text="Salir" />
       <TextField fx:id="OD_Adicion" layoutX="167.0" layoutY="262.0" prefHeight="25.0" prefWidth="163.0" />
