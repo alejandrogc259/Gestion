@@ -13,7 +13,7 @@ public class Client {
 		this.Edad=Edad;
 	}
 	public String toString(){
-		return NIF+","+Nombre+","+Apellidos+","+Edad+".";
+		return NIF+";"+Nombre+";"+Apellidos+";"+Edad;
 	}
 	public String getNIF() {
 		return NIF;

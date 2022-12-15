@@ -1,4 +1,5 @@
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -109,6 +110,49 @@ public class Prueba {
 		}
 		tx.commit();
 		
+	}
+	public static List<Revision> obtenerRevisiones(){
+		List<Revision> revisiones = new ArrayList<Revision>();
+		Properties prop = new Properties();
+		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
+		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		tx.begin();
+		Iterator<Revision> iterador = pm.getExtent(Revision.class).iterator();
+		while(iterador.hasNext())
+		{
+			revisiones.add(iterador.next());
+		}
+		return revisiones;
+	}
+	public static int obtenerID() {
+		int id=0;
+		Properties prop = new Properties();
+		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
+		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		tx.begin();
+		Iterator<Revision> iterador = pm.getExtent(Revision.class).iterator();
+		while(iterador.hasNext())
+		{
+			id=iterador.next().getID();
+		}
+		return id;
+	}
+	public static void anadirRevision(Revision a) {
+		Properties prop = new Properties();
+		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
+		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		tx.begin();
+		pm.makePersistent(a);
+		tx.commit();
 	}
 	
 	

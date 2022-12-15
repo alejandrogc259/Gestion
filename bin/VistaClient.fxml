@@ -33,7 +33,7 @@
       <Button layoutX="312.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#Borrar" text="Borrar" />
       <Button layoutX="412.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#Limpiar" text="Limpiar" />
       <Button layoutX="505.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#Cerrar" text="Salir" />
-      <Button layoutX="401.0" layoutY="294.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Revisiones" />
+      <Button layoutX="401.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#Revisiones" prefHeight="25.0" prefWidth="126.0" text="Revisiones" />
       <ListView fx:id="Edad" layoutX="189.0" layoutY="289.0" prefHeight="35.0" prefWidth="163.0" />
       <TextField fx:id="Apellidos" layoutX="189.0" layoutY="262.0" prefHeight="25.0" prefWidth="338.0" />
       <TextField fx:id="Nombre" layoutX="189.0" layoutY="231.0" prefHeight="25.0" prefWidth="338.0" />

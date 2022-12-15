@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RevisionController">
+   <children>
+      <Label fx:id="cliente" layoutX="212.0" layoutY="14.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tablaRevision" layoutX="6.0" layoutY="69.0" onMouseClicked="#MostrarSeleccion" prefHeight="100.0" prefWidth="996.0">
+        <columns>
+          <TableColumn fx:id="columnaID" prefWidth="35.0" text="ID" />
+          <TableColumn fx:id="columnaNIF" prefWidth="88.0" text="NIF" />
+            <TableColumn fx:id="columnaConsulta" prefWidth="96.0" text="CONSULTA" />
+            <TableColumn fx:id="columnaOD_Esfera" prefWidth="77.0" text="OD_ESFERA" />
+            <TableColumn fx:id="columnaOD_Cilindro" prefWidth="96.0" text="OD_CILINDRO" />
+            <TableColumn fx:id="columnaOD_Adicion" prefWidth="92.0" text="OD_ADICION" />
+            <TableColumn fx:id="columnaOD_Agudeza" prefWidth="105.0" text="OD_AGUDEZA" />
+            <TableColumn fx:id="columnaOI_Esfera" prefWidth="88.0" text="OI_ESFERA" />
+            <TableColumn fx:id="columnaOI_Cilindro" prefWidth="101.0" text="OI_CILINDRO" />
+            <TableColumn fx:id="columnaOI_Adicion" prefWidth="99.0" text="OI_ADICION" />
+            <TableColumn fx:id="columnaOI_Agudeza" prefWidth="118.0" text="OI_AGUDEZA" />
+        </columns>
+      </TableView>
+      <Label layoutX="79.0" layoutY="200.0" text="OD_ESFERA" />
+      <Label layoutX="78.0" layoutY="235.0" text="OD_CILINDRO" />
+      <Label layoutX="74.0" layoutY="266.0" text="OD_ADICION" />
+      <Label layoutX="71.0" layoutY="298.0" text="OD_AGUDEZA" />
+      <Button layoutX="499.0" layoutY="385.0" mnemonicParsing="false" onMouseClicked="#Anadir" text="Añadir" />
+      <Button layoutX="639.0" layoutY="385.0" mnemonicParsing="false" text="Actualizar" />
+      <Button layoutX="792.0" layoutY="385.0" mnemonicParsing="false" text="Borrar" />
+      <Button layoutX="580.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#Limpiar" text="Limpiar" />
+      <Button layoutX="739.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#Cerrar" text="Salir" />
+      <TextField fx:id="OD_Adicion" layoutX="167.0" layoutY="262.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OD_Cilindro" layoutX="167.0" layoutY="231.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OD_Esfera" layoutX="167.0" layoutY="196.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OD_Agudeza" layoutX="167.0" layoutY="294.0" prefHeight="25.0" prefWidth="163.0" />
+      <Label layoutX="551.0" layoutY="199.0" text="OI_ESFERA" />
+      <Label layoutX="550.0" layoutY="234.0" text="OI_CILINDRO" />
+      <Label layoutX="546.0" layoutY="265.0" text="OI_ADICION" />
+      <Label layoutX="543.0" layoutY="297.0" text="OI_AGUDEZA" />
+      <TextField fx:id="OI_Adicion" layoutX="639.0" layoutY="261.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OI_Cilindro" layoutX="639.0" layoutY="230.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OI_Esfera" layoutX="639.0" layoutY="195.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="OI_Agudeza" layoutX="639.0" layoutY="293.0" prefHeight="25.0" prefWidth="163.0" />
+      <DatePicker fx:id="fechaConsulta" layoutX="162.0" layoutY="385.0" />
+   </children>
+</Pane>
