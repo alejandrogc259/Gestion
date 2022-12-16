@@ -70,15 +70,9 @@ public class RevisionController implements Initializable {
     public Label cliente;
     private Client clienteActual;
     private ObservableList<Revision> revisiones;
-
-    public void initialize() {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        //leerRevision();
-    }
     
     public void leerRevision() {
-    	List<Revision> revisiones2=Prueba.obtenerRevisiones();
+    	List<Revision> revisiones2=BD.obtenerRevisiones(clienteActual.getNIF());
     	revisiones = FXCollections.observableArrayList(revisiones2);
     	columnaID.setCellValueFactory(s -> new ReadOnlyObjectWrapper<>(s.getValue().getID()));
     	columnaNIF.setCellValueFactory(s -> new ReadOnlyObjectWrapper<>(s.getValue().getNIF()));
@@ -103,6 +97,7 @@ public class RevisionController implements Initializable {
         leerRevision();
 		
 	}
+	
 	public void MostrarSeleccion() {
 		if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
 			OD_Esfera.setText(String.valueOf(tablaRevision.getSelectionModel().getSelectedItem().getOD_Esfera()));
@@ -113,9 +108,12 @@ public class RevisionController implements Initializable {
 			OI_Cilindro.setText(String.valueOf(tablaRevision.getSelectionModel().getSelectedItem().getOI_Cilindro()));
 			OI_Adicion.setText(String.valueOf(tablaRevision.getSelectionModel().getSelectedItem().getOI_Adicion()));
 			OI_Agudeza.setText(String.valueOf(tablaRevision.getSelectionModel().getSelectedItem().getOI_Agudeza()));
+			fechaConsulta.setValue(tablaRevision.getSelectionModel().getSelectedItem().getConsulta());
+			fechaConsulta.show();
 		}
 		
 	}
+	
 	public void Limpiar() {
 		tablaRevision.getSelectionModel().clearSelection();
 		OD_Esfera.clear();
@@ -126,48 +124,56 @@ public class RevisionController implements Initializable {
 		OI_Cilindro.clear();
 		OI_Adicion.clear();
 		OI_Agudeza.clear();
+		fechaConsulta.setValue(null);
 		leerRevision();
 	}
+	
 	public void Cerrar() {
 		Stage stage = (Stage) OD_Esfera.getScene().getWindow();
 	    stage.close();
 	}
 	
-	  public void Anadir() { 
-		  if(!OD_Esfera.getText().isBlank() && !OD_Cilindro.getText().isBlank() && !OD_Adicion.getText().isBlank() && !OD_Agudeza.getText().isBlank() && !OI_Esfera.getText().isBlank() && !OI_Cilindro.getText().isBlank() && !OI_Adicion.getText().isBlank() && !OI_Agudeza.getText().isBlank()) {
-			  int id=Prueba.obtenerID();
-			  Prueba.anadirRevision(new Revision(id,clienteActual.getNIF(),LocalDate.now(),Double.parseDouble(OD_Esfera.getText()),Double.parseDouble(OD_Cilindro.getText()),Double.parseDouble(OD_Adicion.getText()),Double.parseDouble(OD_Agudeza.getText()),Double.parseDouble(OI_Esfera.getText()),Double.parseDouble(OI_Cilindro.getText()),Double.parseDouble(OI_Adicion.getText()),Double.parseDouble(OI_Agudeza.getText()))); 
-			  Limpiar(); 
-		  } 
-		  else { 
-			Alert alert = new
-			Alert(AlertType.WARNING,"Faltan campos por rellenar"); alert.showAndWait(); 
-		  }
+	public void Anadir() { 
+	  if(!OD_Esfera.getText().isBlank() && !OD_Cilindro.getText().isBlank() && !OD_Adicion.getText().isBlank() && !OD_Agudeza.getText().isBlank() && !OI_Esfera.getText().isBlank() && !OI_Cilindro.getText().isBlank() && !OI_Adicion.getText().isBlank() && !OI_Agudeza.getText().isBlank() && fechaConsulta.getValue()!=null) {
+		  int id=BD.obtenerID();
+		  BD.anadirRevision(new Revision(id,clienteActual.getNIF(),fechaConsulta.getValue(),Double.parseDouble(OD_Esfera.getText()),Double.parseDouble(OD_Cilindro.getText()),Double.parseDouble(OD_Adicion.getText()),Double.parseDouble(OD_Agudeza.getText()),Double.parseDouble(OI_Esfera.getText()),Double.parseDouble(OI_Cilindro.getText()),Double.parseDouble(OI_Adicion.getText()),Double.parseDouble(OI_Agudeza.getText()))); 
+		  Limpiar(); 
+	  } 
+	  else { 
+		Alert alert = new
+		Alert(AlertType.WARNING,"Faltan campos por rellenar"); alert.showAndWait(); 
 	  }
+	}
 	  
-	  public void Borrar() {
-			if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
-				Prueba.BorrarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID());
-				Limpiar();
-			}
-			else {
-				Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ningún cliente");
-				alert.showAndWait();
-			}
-			
-		} 
-	  
-	 public void Actualizar() {
-			if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
-				int id=Prueba.obtenerID();
-				Prueba.ActualizarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID(),new Revision(id,clienteActual.getNIF(),LocalDate.now(),Double.parseDouble(OD_Esfera.getText()),Double.parseDouble(OD_Cilindro.getText()),Double.parseDouble(OD_Adicion.getText()),Double.parseDouble(OD_Agudeza.getText()),Double.parseDouble(OI_Esfera.getText()),Double.parseDouble(OI_Cilindro.getText()),Double.parseDouble(OI_Adicion.getText()),Double.parseDouble(OI_Agudeza.getText())));
-				Limpiar();
-			}
-			else {
-				Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ninguna revisión");
-				alert.showAndWait();
-			}
-			
+	public void Borrar() {
+		if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
+			BD.BorrarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID());
+			Limpiar();
 		}
+		else {
+			Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ninguna revisión");
+			alert.showAndWait();
+		}
+		
+	} 
+	  
+	public void Actualizar() {
+		if(tablaRevision.getSelectionModel().getSelectedItem()!=null) {
+			if(!OD_Esfera.getText().isBlank() && !OD_Cilindro.getText().isBlank() && !OD_Adicion.getText().isBlank() && !OD_Agudeza.getText().isBlank() && !OI_Esfera.getText().isBlank() && !OI_Cilindro.getText().isBlank() && !OI_Adicion.getText().isBlank() && !OI_Agudeza.getText().isBlank() && fechaConsulta.getValue()!=null) {
+				int id=tablaRevision.getSelectionModel().getSelectedItem().getID();
+				BD.ActualizarRevision(tablaRevision.getSelectionModel().getSelectedItem().getID(),new Revision(id,clienteActual.getNIF(),fechaConsulta.getValue(),Double.parseDouble(OD_Esfera.getText()),Double.parseDouble(OD_Cilindro.getText()),Double.parseDouble(OD_Adicion.getText()),Double.parseDouble(OD_Agudeza.getText()),Double.parseDouble(OI_Esfera.getText()),Double.parseDouble(OI_Cilindro.getText()),Double.parseDouble(OI_Adicion.getText()),Double.parseDouble(OI_Agudeza.getText())));
+				Limpiar();
+			}
+			else {
+				Alert alert = new Alert(AlertType.WARNING,"Faltan campos por rellenar");
+				alert.showAndWait();
+			}		
+		}
+		else {
+			Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ninguna revisión");
+			alert.showAndWait();
+		}
+			
+	}
 	 
 }

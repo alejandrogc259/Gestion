@@ -45,19 +45,13 @@ public class ClientController implements Initializable {
     public ListView<Integer> Edad;
     private ObservableList<Client> clientes;
     public static Client seleccionado;
+    
     public static Client obtenerCliente() {
-    	if(seleccionado!=null)return seleccionado;
-    	else return null;
-    }
-
-    public void initialize() {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        leerClient();
+    	return seleccionado;
     }
     
     public void leerClient() {
-    	List<Client> clients=Prueba.obtenerClients();
+    	List<Client> clients=BD.obtenerClients();
     	clientes = FXCollections.observableArrayList(clients);
     	columnaNif.setCellValueFactory(s -> new ReadOnlyObjectWrapper<>(s.getValue().getNIF()));
     	columnaNombre.setCellValueFactory(s -> new ReadOnlyObjectWrapper<>(s.getValue().getNombre()));
@@ -79,6 +73,7 @@ public class ClientController implements Initializable {
         Edad.setItems(edades2);
 		
 	}
+	
 	public void MostrarSeleccion() {
 		if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
 			NIF.setText(tablaClient.getSelectionModel().getSelectedItem().getNIF());
@@ -89,6 +84,7 @@ public class ClientController implements Initializable {
 		}
 		
 	}
+	
 	public void Limpiar() {
 		tablaClient.getSelectionModel().clearSelection();
 		NIF.clear();
@@ -101,14 +97,15 @@ public class ClientController implements Initializable {
 	public void Cerrar() {
 		System.exit(0);
 	}
+	
 	public void Anadir() {
 		if(!NIF.getText().isBlank() && !Nombre.getText().isBlank() && !Apellidos.getText().isBlank() && Edad.getSelectionModel().getSelectedItem()!=null) {
-			boolean anadido=Prueba.anadirClient(new Client(NIF.getText(), Nombre.getText(), Apellidos.getText(), Edad.getSelectionModel().getSelectedItem()));
+			boolean anadido=BD.anadirClient(new Client(NIF.getText(), Nombre.getText(), Apellidos.getText(), Edad.getSelectionModel().getSelectedItem()));
 			if(!anadido) {
 				Alert alert = new Alert(AlertType.WARNING,"Ya hay un cliente con ese NIF");
 				alert.showAndWait();
 			}
-			Limpiar();
+			if(anadido)Limpiar();
 		}
 		else {
 			Alert alert = new Alert(AlertType.WARNING,"Faltan campos por rellenar");
@@ -116,9 +113,10 @@ public class ClientController implements Initializable {
 		}
 		
 	}
+	
 	public void Borrar() {
 		if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
-			Prueba.BorrarClient(tablaClient.getSelectionModel().getSelectedItem().getNIF());
+			BD.BorrarClient(tablaClient.getSelectionModel().getSelectedItem().getNIF());
 			Limpiar();
 		}
 		else {
@@ -127,10 +125,18 @@ public class ClientController implements Initializable {
 		}
 		
 	}
+	
 	public void Actualizar() {
 		if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
-			Prueba.ActualizarClient(tablaClient.getSelectionModel().getSelectedItem().getNIF(),new Client(NIF.getText(), Nombre.getText(), Apellidos.getText(), Edad.getSelectionModel().getSelectedItem()));
-			Limpiar();
+			if(!NIF.getText().isBlank() && !Nombre.getText().isBlank() && !Apellidos.getText().isBlank() && Edad.getSelectionModel().getSelectedItem()!=null) {
+				BD.ActualizarClient(tablaClient.getSelectionModel().getSelectedItem().getNIF(),new Client(NIF.getText(), Nombre.getText(), Apellidos.getText(), Edad.getSelectionModel().getSelectedItem()));
+				Limpiar();
+			}
+			else {
+				Alert alert = new Alert(AlertType.WARNING,"Faltan campos por rellenar");
+				alert.showAndWait();
+			}
+			
 		}
 		else {
 			Alert alert = new Alert(AlertType.WARNING,"No ha seleccionado ningún cliente");
@@ -138,6 +144,7 @@ public class ClientController implements Initializable {
 		}
 		
 	}
+	
 	public void Revisiones() throws Exception {
 		if(tablaClient.getSelectionModel().getSelectedItem()!=null) {
 			Stage secondaryStage=new Stage();

@@ -12,32 +12,15 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 
-public class Prueba {
-	public Prueba(){
-		
-	}
-	public static void anadirClient() {
-		Properties prop = new Properties();
+public class BD {
+	static Properties prop;
+	public BD(){
+		prop = new Properties();
 		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
-		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		tx.begin();
-		Client a= new Client("7","HOLA","APELLIDO",7);
-		pm.makePersistent(a);
-		tx.commit();
-		/*
-		 * tx.begin(); Iterator<Client> iterador =
-		 * pm.getExtent(Client.class).iterator(); System.out.println(iterador.next());
-		 * tx.commit();
-		 */
+		prop.setProperty("javax.jdo.option.ConnectionURL", "revisiones.odb");
 	}
 	public static List<Client> obtenerClients(){
 		List<Client> clientes = new ArrayList<Client>();
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -50,9 +33,6 @@ public class Prueba {
 		return clientes;
 	}
 	public static boolean anadirClient(Client a) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -71,9 +51,6 @@ public class Prueba {
 		return !encontrado;
 	}
 	public static void BorrarClient(String NIF) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -90,9 +67,6 @@ public class Prueba {
 		
 	}
 	public static void ActualizarClient(String NIF,Client a) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -111,11 +85,8 @@ public class Prueba {
 		tx.commit();
 		
 	}
-	public static List<Revision> obtenerRevisiones(){
+	public static List<Revision> obtenerRevisiones(String NIF){
 		List<Revision> revisiones = new ArrayList<Revision>();
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -123,15 +94,15 @@ public class Prueba {
 		Iterator<Revision> iterador = pm.getExtent(Revision.class).iterator();
 		while(iterador.hasNext())
 		{
-			revisiones.add(iterador.next());
+			Revision r = iterador.next();
+			if(r.getNIF().equals(NIF)) {
+				revisiones.add(r);
+			}
 		}
 		return revisiones;
 	}
 	public static int obtenerID() {
-		int id=0;
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
+		int id=1;
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -140,13 +111,11 @@ public class Prueba {
 		while(iterador.hasNext())
 		{
 			id=iterador.next().getID();
+			id++;
 		}
 		return id;
 	}
 	public static void anadirRevision(Revision a) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -156,9 +125,6 @@ public class Prueba {
 	}
 	
 	public static void BorrarRevision(int ID) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -175,9 +141,6 @@ public class Prueba {
 	}
 	
 	public static void ActualizarRevision(int ID,Revision a) {
-		Properties prop = new Properties();
-		prop.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.objectdb.jdo.PMF");
-		prop.setProperty("javax.jdo.option.ConnectionURL", "lol.odb");
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(prop);
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -187,8 +150,6 @@ public class Prueba {
 		{
 			Revision x = iterador.next();
 			if(x.getID() == ID) {
-				x.setID(a.getID());
-				x.setNIF(a.getNIF());
 				x.setConsulta(a.getConsulta());
 				x.setOD_Esfera(a.getOD_Esfera());
 				x.setOD_Cilindro(a.getOD_Cilindro());

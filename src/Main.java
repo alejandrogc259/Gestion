@@ -10,6 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+    	BD baseDatosRevisiones = new BD();
     	Parent root = FXMLLoader.load(getClass().getResource("VistaClient.fxml"));
         primaryStage.setTitle("Revisión Ocular");
         primaryStage.setScene(new Scene(root, 800, 400));
